@@ -10,4 +10,12 @@ public class ApiConstant {
 
         public static final String HMIS = "api/hmis";
     }
+
+    public static class Hmis {
+        private Hmis() {
+        }
+
+        public static final String PATIENT = "/patient";
+    }
+
 }
