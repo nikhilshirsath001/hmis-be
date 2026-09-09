@@ -1,7 +1,11 @@
 package com.suma.hmis_service.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ApiResponse {
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
