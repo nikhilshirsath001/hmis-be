@@ -1,5 +1,6 @@
 package com.suma.hmis_service.entities;
 
+import com.suma.hmis_service.models.patient.CreatePatientDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +29,8 @@ public class Patient {
     private String mobileNumber;
 
     @Column(name = "gender")
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private EGender gender;
 
     @Column(name = "is_new_born")
     private boolean isNewBorn;
@@ -56,4 +58,20 @@ public class Patient {
     @Column(name = "pin_code")
     private Long pinCode;
 
+
+    public static Patient toPatientUsingCreatePatientDto(CreatePatientDto obj) {
+        return Patient.builder()
+                .patientName(obj.getPatientName())
+                .mobileNumber(obj.getMobileNumber())
+                .gender(obj.getGender())
+                .isNewBorn(obj.isNewBorn())
+                .patientMrNumber(obj.getPatientMrNumber())
+                .dateOfBirth(obj.getDateOfBirth())
+                .address(obj.getAddress())
+                .town(obj.getTown())
+                .district(obj.getDistrict())
+                .state(obj.getState())
+                .pinCode(obj.getPinCode())
+                .build();
+    }
 }

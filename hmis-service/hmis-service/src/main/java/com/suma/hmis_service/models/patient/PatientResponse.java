@@ -1,5 +1,6 @@
 package com.suma.hmis_service.models.patient;
 
+import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ public class PatientResponse {
 
     private String mobileNumber;
 
-    private String gender;
+    private EGender gender;
 
     private boolean isNewBorn;
 
