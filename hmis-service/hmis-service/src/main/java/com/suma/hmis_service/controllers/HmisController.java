@@ -27,4 +27,10 @@ public class HmisController {
     }
 
 
+//    Contact Person APIS
+    @GetMapping(ApiConstant.Hmis.CONTACT_PERSON)
+    public ResponseEntity<ApiResponse> getContanctPersonByAbhaId(@RequestParam String abhaId) {
+        return ResponseEntity.ok().body(hmisService.getContanctPersonByAbhaId(abhaId));
+    }
+
 }

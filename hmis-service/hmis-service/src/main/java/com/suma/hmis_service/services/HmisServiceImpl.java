@@ -4,10 +4,9 @@ import com.suma.hmis_service.clients.PatientClient;
 import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.models.ApiResponse;
-import com.suma.hmis_service.models.patient.CreatePatientDto;
-import com.suma.hmis_service.models.patient.CreatePatientRequest;
-import com.suma.hmis_service.models.patient.PatientResponse;
+import com.suma.hmis_service.models.patient.*;
 import com.suma.hmis_service.repositories.PatientRepository;
+import com.suma.hmis_service.services.patient.ContactPersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.JsonNode;
@@ -22,10 +21,13 @@ public class HmisServiceImpl implements HmisService{
 
     private final PatientRepository patientRepository;
     private final PatientClient patientClient;
+    private final ContactPersonService contactPersonService;
 
-    public HmisServiceImpl(PatientRepository patientRepository, PatientClient patientClient ){
+    public HmisServiceImpl(PatientRepository patientRepository, PatientClient patientClient,
+                           ContactPersonService contactPersonService){
         this.patientRepository= patientRepository;
         this.patientClient = patientClient;
+        this.contactPersonService= contactPersonService;
     }
 
 
@@ -34,7 +36,8 @@ public class HmisServiceImpl implements HmisService{
         try {
             Patient patient = patientRepository.findByAbhaId(abhaId).orElseThrow(() -> new RuntimeException("Patient not found"));
                 patientResponse = PatientResponse.toPatientResponseUsingPatient(patient);
-            return new ApiResponse(1, "", patientResponse);
+               ApiResponse response = new ApiResponse(1, "", patientResponse);
+            return response ;
         } catch (Exception e) {
             log.error("Error occurred in getPatients by abhaId: {}, error: {}", abhaId, e.getMessage());
             return new ApiResponse(2, "", patientResponse
@@ -49,8 +52,25 @@ public class HmisServiceImpl implements HmisService{
         patient.setAbhaId(request.getAbhaId());
         Patient savedPatient = patientRepository.save(patient);
 
+        CreatePatientDto createPatientDto1 = this.getPatient();
+
+        CreateContactPersonDto contactPersonDto = CreateContactPersonDto.builder()
+                .name(createPatientDto1.getPatientName())
+                .gender(createPatientDto1.getGender())
+                .address(createPatientDto1.getAddress())
+                .relation("Brother")
+                .mobileNo(createPatientDto1.getMobileNumber())
+                .abhaId(savedPatient.getAbhaId()).build();
+
+        ApiResponse response =  contactPersonService.createContactPerson(contactPersonDto);
+
         return new ApiResponse(1, "", PatientResponse.toPatientResponseUsingPatient(savedPatient));
 
+    }
+
+    @Override
+    public ApiResponse getContanctPersonByAbhaId(String abhaId) {
+        return contactPersonService.getContanctPersonByAbhaId(abhaId);
     }
 
 

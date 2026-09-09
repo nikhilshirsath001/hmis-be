@@ -18,6 +18,10 @@ public class ApiConstant {
         public static final String PATIENT = "/patient";
         public static final String CREATE_PATIENT = "/patient/create";
 
+
+        public static final String CONTACT_PERSON = "/contact-person";
+
+
     }
 
 }
