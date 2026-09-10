@@ -4,14 +4,21 @@ import com.suma.hmis_service.clients.PatientClient;
 import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.models.ApiResponse;
+import com.suma.hmis_service.entities.PatientAttachment;
 import com.suma.hmis_service.models.patient.*;
 import com.suma.hmis_service.repositories.PatientRepository;
+import com.suma.hmis_service.services.document.DocumentService;
 import com.suma.hmis_service.services.patient.ContactPersonService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tools.jackson.databind.JsonNode;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -22,12 +29,18 @@ public class HmisServiceImpl implements HmisService{
     private final PatientRepository patientRepository;
     private final PatientClient patientClient;
     private final ContactPersonService contactPersonService;
+    private final DocumentService documentService;
+    private final ModelMapper modelMapper;
 
     public HmisServiceImpl(PatientRepository patientRepository, PatientClient patientClient,
-                           ContactPersonService contactPersonService){
+                           ContactPersonService contactPersonService,
+                           DocumentService documentService,
+                           ModelMapper modelMapper){
         this.patientRepository= patientRepository;
         this.patientClient = patientClient;
         this.contactPersonService= contactPersonService;
+        this.documentService = documentService;
+        this.modelMapper =  modelMapper;
     }
 
 
@@ -35,7 +48,7 @@ public class HmisServiceImpl implements HmisService{
         PatientResponse patientResponse = null;
         try {
             Patient patient = patientRepository.findByAbhaId(abhaId).orElseThrow(() -> new RuntimeException("Patient not found"));
-                patientResponse = PatientResponse.toPatientResponseUsingPatient(patient);
+                patientResponse = modelMapper.map(patient,PatientResponse.class);
                ApiResponse response = new ApiResponse(1, "", patientResponse);
             return response ;
         } catch (Exception e) {
@@ -45,12 +58,14 @@ public class HmisServiceImpl implements HmisService{
         }
     }
 
-    public ApiResponse createPatients(CreatePatientRequest request){
-
+    public ApiResponse createPatients(CreatePatientRequest request, Map<String, MultipartFile> files) {
         CreatePatientDto createPatientDto = this.getPatient();
-        Patient patient = Patient.toPatientUsingCreatePatientDto(createPatientDto);
+        Patient patient = modelMapper.map(createPatientDto,Patient.class);
         patient.setAbhaId(request.getAbhaId());
         Patient savedPatient = patientRepository.save(patient);
+		List<PatientAttachment> patientAttachments = documentService.uploadDocuments(savedPatient, files);
+        savedPatient.getAttachments().addAll(patientAttachments);
+        savedPatient = patientRepository.save(savedPatient);
 
         CreatePatientDto createPatientDto1 = this.getPatient();
 
@@ -64,7 +79,7 @@ public class HmisServiceImpl implements HmisService{
 
         ApiResponse response =  contactPersonService.createContactPerson(contactPersonDto);
 
-        return new ApiResponse(1, "", PatientResponse.toPatientResponseUsingPatient(savedPatient));
+        return new ApiResponse(1, "", modelMapper.map(savedPatient,PatientResponse.class));
 
     }
 

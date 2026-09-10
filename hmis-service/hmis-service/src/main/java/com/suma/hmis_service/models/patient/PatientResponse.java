@@ -2,17 +2,18 @@ package com.suma.hmis_service.models.patient;
 
 import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.suma.hmis_service.entities.PatientAttachment;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class PatientResponse {
 
     private String abhaId;
@@ -39,6 +40,7 @@ public class PatientResponse {
     private String state;
 
     private Long pinCode;
+    private List<PatientAttachment> attachments = new ArrayList<>();
 
     public static PatientResponse toPatientResponseUsingPatient(Patient obj) {
         return PatientResponse.builder()

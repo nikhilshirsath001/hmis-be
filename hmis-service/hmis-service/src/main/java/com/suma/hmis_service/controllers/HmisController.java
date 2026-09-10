@@ -8,6 +8,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(ApiConstant.Controller.HMIS)
@@ -22,8 +26,13 @@ public class HmisController {
     }
 
     @PostMapping(ApiConstant.Hmis.CREATE_PATIENT)
-    public ResponseEntity<ApiResponse> createPatients(@RequestBody CreatePatientRequest request) {
-        return ResponseEntity.ok().body(hmisService.createPatients(request));
+    public ResponseEntity<ApiResponse> createPatients(
+            @RequestPart("metadata") CreatePatientRequest createPatientRequest,
+            MultipartHttpServletRequest multipartHttpServletRequest
+    ) {
+        Map<String, MultipartFile> files = multipartHttpServletRequest.getFileMap();
+        files.remove("metadata");
+        return ResponseEntity.ok().body(hmisService.createPatients(createPatientRequest, files));
     }
 
 

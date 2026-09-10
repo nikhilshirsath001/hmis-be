@@ -1,10 +1,13 @@
 package com.suma.hmis_service.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.suma.hmis_service.models.patient.CreatePatientDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "patient")
@@ -19,7 +22,7 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "abha_id")
+    @Column(name = "abha_id",unique = true,nullable = false)
     private String abhaId;
 
     @Column(name = "patient_name")
@@ -58,6 +61,15 @@ public class Patient {
     @Column(name = "pin_code")
     private Long pinCode;
 
+    @OneToMany(
+            mappedBy = "patient",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    @JsonManagedReference
+    private List<PatientAttachment> attachments = new ArrayList<>();
 
     public static Patient toPatientUsingCreatePatientDto(CreatePatientDto obj) {
         return Patient.builder()
