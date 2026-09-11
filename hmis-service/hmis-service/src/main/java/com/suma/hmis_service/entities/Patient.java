@@ -71,6 +71,11 @@ public class Patient {
     @JsonManagedReference
     private List<PatientAttachment> attachments = new ArrayList<>();
 
+    @Builder.Default
+    @JsonManagedReference
+    @OneToMany(mappedBy = "patient")
+    private List<Billing> billings = new ArrayList<>();
+
     public static Patient toPatientUsingCreatePatientDto(CreatePatientDto obj) {
         return Patient.builder()
                 .patientName(obj.getPatientName())

@@ -25,6 +25,12 @@ public class ApiConstant {
         public static final String CONTACT_PERSON = "/contact-person";
 
 
+        public static final String BILLING = "/billing";
+        public static final String BILLING_CREATE = "/billing/create";
+
+
+
+
     }
 
     public static class Document {

@@ -1,6 +1,8 @@
 package com.suma.hmis_service.controllers;
 
 import com.suma.hmis_service.models.ApiResponse;
+import com.suma.hmis_service.models.billing.BillingDto;
+import com.suma.hmis_service.models.billing.CreateBillingRequest;
 import com.suma.hmis_service.models.constants.ApiConstant;
 import com.suma.hmis_service.models.patient.CreatePatientRequest;
 import com.suma.hmis_service.services.HmisService;
@@ -41,5 +43,24 @@ public class HmisController {
     public ResponseEntity<ApiResponse> getContanctPersonByAbhaId(@RequestParam String abhaId) {
         return ResponseEntity.ok().body(hmisService.getContanctPersonByAbhaId(abhaId));
     }
+
+
+    // Billing modules Apis
+    @GetMapping(ApiConstant.Hmis.BILLING)
+    public ResponseEntity<ApiResponse> getBillingByClaimId(@RequestParam String claimId) {
+        return ResponseEntity.ok().body(hmisService.getBillingByClaimId(claimId));
+    }
+
+    // Billing modules Apis
+    @GetMapping(ApiConstant.Hmis.BILLING+"/{patientId}")
+    public ResponseEntity<ApiResponse> getBillingByPatientId(@PathVariable(name = "patientId") String patientId) {
+        return ResponseEntity.ok().body(hmisService.getBillingByPatientId(patientId));
+    }
+
+    @PostMapping(ApiConstant.Hmis.BILLING_CREATE)
+    public ResponseEntity<ApiResponse> createBilling(@RequestBody CreateBillingRequest createBillingRequest) {
+        return ResponseEntity.ok().body(hmisService.createBilling(createBillingRequest));
+    }
+
 
 }

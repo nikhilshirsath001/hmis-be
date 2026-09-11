@@ -8,7 +8,7 @@ import com.suma.hmis_service.entities.PatientAttachment;
 import com.suma.hmis_service.models.document.PatientAttachmentResponse;
 import com.suma.hmis_service.models.document.PatientDocumentType;
 import com.suma.hmis_service.repositories.DocumentRepository;
-import com.suma.hmis_service.repositories.PatientRepository;
+import com.suma.hmis_service.repositories.patient.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

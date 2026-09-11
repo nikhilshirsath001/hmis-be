@@ -5,13 +5,15 @@ import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.models.ApiResponse;
 import com.suma.hmis_service.entities.PatientAttachment;
+import com.suma.hmis_service.models.billing.BillingDto;
+import com.suma.hmis_service.models.billing.CreateBillingRequest;
 import com.suma.hmis_service.models.patient.*;
-import com.suma.hmis_service.repositories.PatientRepository;
+import com.suma.hmis_service.repositories.patient.PatientRepository;
+import com.suma.hmis_service.services.billing.BillingService;
 import com.suma.hmis_service.services.document.DocumentService;
 import com.suma.hmis_service.services.patient.ContactPersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import tools.jackson.databind.JsonNode;
@@ -31,16 +33,19 @@ public class HmisServiceImpl implements HmisService{
     private final ContactPersonService contactPersonService;
     private final DocumentService documentService;
     private final ModelMapper modelMapper;
+    private final BillingService billingService;
 
     public HmisServiceImpl(PatientRepository patientRepository, PatientClient patientClient,
                            ContactPersonService contactPersonService,
                            DocumentService documentService,
-                           ModelMapper modelMapper){
+                           ModelMapper modelMapper,
+                           BillingService billingService){
         this.patientRepository= patientRepository;
         this.patientClient = patientClient;
         this.contactPersonService= contactPersonService;
         this.documentService = documentService;
         this.modelMapper =  modelMapper;
+        this.billingService = billingService;
     }
 
 
@@ -87,6 +92,22 @@ public class HmisServiceImpl implements HmisService{
     public ApiResponse getContanctPersonByAbhaId(String abhaId) {
         return contactPersonService.getContanctPersonByAbhaId(abhaId);
     }
+
+    @Override
+    public ApiResponse getBillingByClaimId(String claimId) {
+        return billingService.getBillingByClaimId(claimId);
+    }
+
+    @Override
+    public ApiResponse getBillingByPatientId(String patientId) {
+        return billingService.getBillingByPatientId(patientId);
+    }
+
+    @Override
+    public ApiResponse createBilling(CreateBillingRequest createBillingRequest) {
+        return billingService.createBilling(createBillingRequest);
+    }
+
 
 
     public CreatePatientDto getPatient() {

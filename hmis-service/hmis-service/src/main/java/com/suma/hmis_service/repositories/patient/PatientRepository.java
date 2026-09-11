@@ -1,4 +1,4 @@
-package com.suma.hmis_service.repositories;
+package com.suma.hmis_service.repositories.patient;
 
 import com.suma.hmis_service.entities.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
