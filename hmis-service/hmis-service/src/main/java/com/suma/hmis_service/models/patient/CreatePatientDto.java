@@ -24,7 +24,6 @@ public class CreatePatientDto {
 
     private LocalDate dateOfBirth;
 
-
     private String address;
 
     private String town;

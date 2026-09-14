@@ -14,7 +14,6 @@ public class ApiResponse {
     private String message;
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private Object data;
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Long totalRecords;
 

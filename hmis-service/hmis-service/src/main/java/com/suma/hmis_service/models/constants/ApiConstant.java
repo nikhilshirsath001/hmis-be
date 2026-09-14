@@ -3,6 +3,7 @@ package com.suma.hmis_service.models.constants;
 import java.util.Set;
 
 public class ApiConstant {
+
     private ApiConstant() {
     }
 
@@ -21,6 +22,14 @@ public class ApiConstant {
         public static final String PATIENT = "/patient";
         public static final String CREATE_PATIENT = "/patient/create";
 
+
+        public static final String POLICY = "/policy";
+        public static final String GETPOLICYBYPATIENT="/policy/{patientId}" ;
+        public static final String CREATEPOLICIES = "/policy/create/{patientId}";
+
+
+        public static final String PROCEDURE= "/procedure";
+        public static final String GETPROCEDURE= "/procedure/{abhaId}";
 
         public static final String CONTACT_PERSON = "/contact-person";
 

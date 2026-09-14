@@ -44,8 +44,6 @@ public class Patient {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-
-
     @Column(name = "address")
     private String address;
 
@@ -60,6 +58,9 @@ public class Patient {
 
     @Column(name = "pin_code")
     private Long pinCode;
+
+    @Column(name = "policy_number")
+    private String policyNumber;
 
     @OneToMany(
             mappedBy = "patient",
