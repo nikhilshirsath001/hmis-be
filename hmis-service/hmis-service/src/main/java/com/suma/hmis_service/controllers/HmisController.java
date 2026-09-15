@@ -47,13 +47,13 @@ public class HmisController {
 
     // Billing modules Apis
     @GetMapping(ApiConstant.Hmis.BILLING)
-    public ResponseEntity<ApiResponse> getBillingByClaimId(@RequestParam String claimId) {
+    public ResponseEntity<ApiResponse> getBillingByClaimId(@RequestParam (name = "claimId") String claimId) {
         return ResponseEntity.ok().body(hmisService.getBillingByClaimId(claimId));
     }
 
     // Billing modules Apis
-    @GetMapping(ApiConstant.Hmis.BILLING+"/{patientId}")
-    public ResponseEntity<ApiResponse> getBillingByPatientId(@PathVariable(name = "patientId") String patientId) {
+    @GetMapping(ApiConstant.Hmis.BILLING_BY_PATIENT)
+    public ResponseEntity<ApiResponse> getBillingByPatientId(@RequestParam (name = "patientId") String patientId) {
         return ResponseEntity.ok().body(hmisService.getBillingByPatientId(patientId));
     }
 

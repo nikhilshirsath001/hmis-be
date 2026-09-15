@@ -25,8 +25,8 @@ public class ApiConstant {
 
 
         public static final String POLICY = "/policy";
-        public static final String GETPOLICYBYPATIENT="/policy";
-        public static final String CREATEPOLICIES = "/policy/create";
+        public static final String GET_POLICY_BY_PATIENT="/policy";
+        public static final String CREATE_POLICIES = "/policy/create";
 
 
 
@@ -34,6 +34,8 @@ public class ApiConstant {
 
 
         public static final String BILLING = "/billing";
+        public static final String BILLING_BY_PATIENT = "/billing/patient";
+
         public static final String BILLING_CREATE = "/billing/create";
 
 

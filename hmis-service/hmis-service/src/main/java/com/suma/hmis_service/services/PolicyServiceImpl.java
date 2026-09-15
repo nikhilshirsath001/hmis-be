@@ -3,6 +3,7 @@ import com.suma.hmis_service.clients.PolicyClient;
 import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.entities.Policy;
 import com.suma.hmis_service.models.ApiResponse;
+import com.suma.hmis_service.models.CreatePolicyRequest;
 import com.suma.hmis_service.models.policy.PolicyResponse;
 import com.suma.hmis_service.repositories.PolicyRepository;
 import com.suma.hmis_service.repositories.patient.PatientRepository;
@@ -29,7 +30,10 @@ public class PolicyServiceImpl implements PolicyService {
     }
 
     @Override
-    public ApiResponse getExternalPolicies(Long patientId, String policyNumber) {
+    public ApiResponse getExternalPolicies(CreatePolicyRequest request){
+
+        Long patientId = request.getPatientId();;
+        String policyNumber = request.getPolicyNumber();
 
         Patient patient = patientRepository.findById(patientId).orElseThrow();
 
@@ -89,7 +93,8 @@ public class PolicyServiceImpl implements PolicyService {
 
         return new ApiResponse(1, "", PolicyResponse.toPolicyResponseUsingPolicy(savedPolicy));}
 
-       @Override
+
+    @Override
        public ApiResponse getPoliciesByPatient(Long patientId) {
 
         Patient patient = patientRepository.findById(patientId).orElseThrow();

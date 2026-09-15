@@ -16,14 +16,14 @@ public class PolicyController {
     private PolicyServiceImpl policyService ;
 
 
-    @GetMapping(ApiConstant.Hmis.GETPOLICYBYPATIENT)
+    @GetMapping(ApiConstant.Hmis.GET_POLICY_BY_PATIENT)
     public ResponseEntity<ApiResponse> getPoliciesByPatient(@RequestParam (name = "patientId") Long patientId) {
         return  ResponseEntity.ok().body(policyService.getPoliciesByPatient(patientId));
     }
 
-    @PostMapping(ApiConstant.Hmis.CREATEPOLICIES)
+    @PostMapping(ApiConstant.Hmis.CREATE_POLICIES)
     public ResponseEntity<ApiResponse> saveExternalPolicies(@RequestBody CreatePolicyRequest request) {
-        return ResponseEntity.ok().body(policyService.getExternalPolicies(request.getPatientId(), request.getPolicyNumber()));
+        return ResponseEntity.ok().body(policyService.getExternalPolicies(request));
     }
 
 }
