@@ -8,6 +8,7 @@ public class ApiConstant {
     }
 
     public static class Controller {
+
         private Controller() {
         }
 
@@ -24,12 +25,10 @@ public class ApiConstant {
 
 
         public static final String POLICY = "/policy";
-        public static final String GETPOLICYBYPATIENT="/policy/{patientId}" ;
-        public static final String CREATEPOLICIES = "/policy/create/{patientId}";
+        public static final String GETPOLICYBYPATIENT="/policy";
+        public static final String CREATEPOLICIES = "/policy/create";
 
 
-        public static final String PROCEDURE= "/procedure";
-        public static final String GETPROCEDURE= "/procedure/{abhaId}";
 
         public static final String CONTACT_PERSON = "/contact-person";
 

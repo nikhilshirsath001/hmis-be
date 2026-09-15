@@ -4,9 +4,9 @@ import com.suma.hmis_service.models.ApiResponse;
 
 public interface PolicyService {
 
- ApiResponse getExternalPolicies(Long patientId, String policyNumber);
+  ApiResponse getExternalPolicies(Long patientId, String policyNumber);
 
- ApiResponse getPoliciesByPatient(Long patientId);
+  ApiResponse getPoliciesByPatient(Long patientId);
 
 
 

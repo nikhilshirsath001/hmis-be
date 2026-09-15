@@ -1,5 +1,6 @@
 package com.suma.hmis_service.controllers;
 import com.suma.hmis_service.models.ApiResponse;
+import com.suma.hmis_service.models.CreatePolicyRequest;
 import com.suma.hmis_service.models.constants.ApiConstant;
 import com.suma.hmis_service.services.PolicyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ public class PolicyController {
 
 
     @GetMapping(ApiConstant.Hmis.GETPOLICYBYPATIENT)
-    public ApiResponse getPoliciesByPatient(@PathVariable Long patientId) {
-        return policyService.getPoliciesByPatient(patientId);
+    public ResponseEntity<ApiResponse> getPoliciesByPatient(@RequestParam (name = "patientId") Long patientId) {
+        return  ResponseEntity.ok().body(policyService.getPoliciesByPatient(patientId));
     }
 
     @PostMapping(ApiConstant.Hmis.CREATEPOLICIES)
-    public ApiResponse saveExternalPolicies(@PathVariable Long patientId , @RequestParam String policyNumber) {
-        return policyService.getExternalPolicies(patientId,policyNumber);
+    public ResponseEntity<ApiResponse> saveExternalPolicies(@RequestBody CreatePolicyRequest request) {
+        return ResponseEntity.ok().body(policyService.getExternalPolicies(request.getPatientId(), request.getPolicyNumber()));
     }
 
 }

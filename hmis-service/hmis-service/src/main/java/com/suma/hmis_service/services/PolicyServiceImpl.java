@@ -99,13 +99,12 @@ public class PolicyServiceImpl implements PolicyService {
         List<PolicyResponse> policyResponses = new ArrayList<>();
 
         for (Policy policy : policies) {
-
             policyResponses.add(PolicyResponse.toPolicyResponseUsingPolicy(policy));
         }
-
         return new ApiResponse(1, "", policyResponses);}
 
-       private Date convertToDate(String date) {
+
+        private Date convertToDate(String date) {
 
         if (date == null || date.isEmpty()) {
             return null;
