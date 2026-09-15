@@ -1,4 +1,4 @@
-package com.suma.hmis_service.feature.preauth;
+package com.suma.hmis_service.feature.eligibility;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import java.time.OffsetDateTime;
 )
 @Getter
 @Setter
-public class PreAuthPayloadEntity {
+public class EligibilityPayloadEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
