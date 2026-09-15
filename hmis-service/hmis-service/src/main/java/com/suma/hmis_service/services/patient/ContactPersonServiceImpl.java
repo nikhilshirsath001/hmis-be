@@ -5,18 +5,19 @@ import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.models.ApiResponse;
 import com.suma.hmis_service.models.patient.*;
 import com.suma.hmis_service.repositories.patient.ContactPersonRepository;
+import com.suma.hmis_service.repositories.patient.PatientRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ContactPersonServiceImpl implements ContactPersonService{
 
     private  final  ContactPersonRepository contactPersonRepository;
+    private  final PatientRepository patientRepository;
 
-    ContactPersonServiceImpl(ContactPersonRepository contactPersonRepository){
-        this.contactPersonRepository = contactPersonRepository;
-    }
 
     @Override
     public ApiResponse createContactPerson(CreateContactPersonDto request){
@@ -33,7 +34,7 @@ public class ContactPersonServiceImpl implements ContactPersonService{
     public ApiResponse getContanctPersonByAbhaId(String abhaId) {
         ContactPersonResponse contactPersonResponse = null;
         try {
-            ContactPerson contactPerson = contactPersonRepository.findByAbhaId(abhaId);
+            ContactPerson contactPerson = patientRepository.findContactPersonByAbhaId(abhaId);
             contactPersonResponse = ContactPersonResponse.toContactPersonResponseUsingContactPerson(contactPerson);
             return new ApiResponse(1, "", contactPersonResponse);
         } catch (Exception e) {

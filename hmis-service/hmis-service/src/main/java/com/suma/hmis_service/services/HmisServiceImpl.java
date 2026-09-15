@@ -1,6 +1,7 @@
 package com.suma.hmis_service.services;
 
 import com.suma.hmis_service.clients.PatientClient;
+import com.suma.hmis_service.entities.ContactPerson;
 import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.models.ApiResponse;
@@ -80,9 +81,13 @@ public class HmisServiceImpl implements HmisService{
                 .address(createPatientDto1.getAddress())
                 .relation("Brother")
                 .mobileNo(createPatientDto1.getMobileNumber())
-                .abhaId(savedPatient.getAbhaId()).build();
+//                .abhaId(savedPatient.getAbhaId())
+                .build();
 
         ApiResponse response =  contactPersonService.createContactPerson(contactPersonDto);
+        ContactPerson contactPerson = modelMapper.map(response.getData(), ContactPerson.class);
+        patient.setContactPerson(contactPerson);
+        savedPatient = patientRepository.save(patient);
 
         return new ApiResponse(1, "", modelMapper.map(savedPatient,PatientResponse.class));
 

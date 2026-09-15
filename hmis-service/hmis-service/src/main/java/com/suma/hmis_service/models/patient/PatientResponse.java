@@ -1,5 +1,6 @@
 package com.suma.hmis_service.models.patient;
 
+import com.suma.hmis_service.entities.ContactPerson;
 import com.suma.hmis_service.entities.EGender;
 import com.suma.hmis_service.entities.Patient;
 import com.suma.hmis_service.entities.PatientAttachment;
@@ -41,6 +42,8 @@ public class PatientResponse {
 
     private Long pinCode;
     private List<PatientAttachment> attachments = new ArrayList<>();
+
+    private ContactPerson contactPerson;
 
     public static PatientResponse toPatientResponseUsingPatient(Patient obj) {
         return PatientResponse.builder()

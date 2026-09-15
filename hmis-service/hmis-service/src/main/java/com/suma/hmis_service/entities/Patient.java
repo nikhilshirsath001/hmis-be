@@ -77,6 +77,10 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Billing> billings = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "contact_person_id", referencedColumnName = "id")
+    private ContactPerson contactPerson;
+
     public static Patient toPatientUsingCreatePatientDto(CreatePatientDto obj) {
         return Patient.builder()
                 .patientName(obj.getPatientName())

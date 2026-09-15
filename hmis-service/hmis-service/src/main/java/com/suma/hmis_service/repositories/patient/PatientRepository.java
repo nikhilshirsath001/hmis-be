@@ -1,5 +1,6 @@
 package com.suma.hmis_service.repositories.patient;
 
+import com.suma.hmis_service.entities.ContactPerson;
 import com.suma.hmis_service.entities.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +14,8 @@ public interface PatientRepository extends JpaRepository<Patient,Long> {
     @Query(value = "SELECT * FROM patient WHERE abha_id = :abhaId", nativeQuery = true)
     Optional<Patient> findByAbhaId(@Param("abhaId") String abhaId);
 
+    @Query("""
+            SELECT p.contactPerson FROM Patient p WHERE p.abhaId = :abhaId
+            """)
+    ContactPerson findContactPersonByAbhaId(@Param("abhaId") String abhaId);
 }

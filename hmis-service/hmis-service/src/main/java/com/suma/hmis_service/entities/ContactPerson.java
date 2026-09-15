@@ -27,7 +27,7 @@ public class ContactPerson {
 
     private String address;
 
-    private String abhaId;
+//    private String abhaId;
 
     public static ContactPerson toContactPersonFromContactPersonDto(CreateContactPersonDto obj) {
         return ContactPerson.builder()
@@ -36,7 +36,7 @@ public class ContactPerson {
                 .relation(obj.getRelation())
                 .mobileNo(obj.getMobileNo())
                 .address(obj.getAddress())
-                .abhaId(obj.getAbhaId())
+//                .abhaId(obj.getAbhaId())
                 .build();
     }
 

@@ -13,4 +13,6 @@ public interface DocumentRepository extends JpaRepository<PatientAttachment, Str
     Optional<PatientAttachment> findByIdAndPatientId(String attachmentId, Long patientId);
 
     Optional<PatientAttachment> findByPatientIdAndId(Long patientId, String attachmentId);
+
+    List<PatientAttachment> findAllByIdInAndPatientId(List<String> ids, Long patientId);
 }
